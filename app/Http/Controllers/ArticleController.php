@@ -52,6 +52,8 @@ class ArticleController extends Controller
     public function edit(string $id)
     {
         //
+        $article = Article::findOrFail($id);
+        return view('components.update',['data'=>$article]);
     }
 
     /**
@@ -60,6 +62,9 @@ class ArticleController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $article = Article::findOrFail($id);
+        $article->update($request->all());
+        return redirect('articles');
     }
 
     /**
@@ -67,6 +72,14 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //Eliminar un dato de la tabla
+        Article::destroy($id);
+        return redirect('articles');
+
+        //Actualizar un dato de la tabla
+        // $article = Article::findOrFail($id);
+        // $article->status = 'inactive';
+        // $article->save();
+        // return redirect('articles');
     }
 }
